@@ -19,6 +19,7 @@ FILE.onchange = async ()=>{
 document.getElementById("overlay").style.display = "flex";
 
 function loadPage(){
+    document.getElementById("continue").innerHTML = "Go to Page"
     Page = document.getElementById('page-num').value * 1;//str to int
     if(!TEASE.hasOwnProperty("page " + Page)){
         alert("Page number too big");
@@ -26,5 +27,9 @@ function loadPage(){
     }
     IMG.src = "https://media.milovana.com/timg/tb_l/" + TEASE["page " + Page]['img']
     TEXT.innerHTML = TEASE["page " + Page]['text'];
-    document.getElementById('page-num').value = Page + 1;
+    
+    if(!TEASE.hasOwnProperty("page " + (Page+1))){
+        document.getElementById("continue").innerHTML = "END<br>Go to Page"
+    }
+    document.getElementById("page-num").value = Page + 1;
 }
