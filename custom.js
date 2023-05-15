@@ -30,6 +30,8 @@ function loadPage(){
     
     if(!TEASE.hasOwnProperty("page " + (Page+1))){
         document.getElementById("continue").innerHTML = "END<br>Go to Page"
+        document.getElementById("page-num").value = 1;
+    }else{
+        document.getElementById("page-num").value = Page + 1;
     }
-    document.getElementById("page-num").value = Page + 1;
 }
