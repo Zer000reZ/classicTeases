@@ -9,6 +9,11 @@ FILE.onchange = async ()=>{
         TEASE = JSON.parse(await FILE.files[0].text());
         let tt = document.getElementById("tease_title")
         tt.innerHTML = TEASE['meta']['title'] + tt.innerHTML;
+        if(TEASE["meta"].hasOwnProperty("author")){
+            let author = document.getElementById("author")
+            author.innerText = TEASE['meta']['author']['name']
+            author.href = "https://milovana.com/webteases/?author=" + TEASE['meta']['author']['user-id']
+        }
     }catch{
         alert("Invalid File. Try again");
         return;
