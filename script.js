@@ -26,13 +26,14 @@ document.getElementById("overlay").style.display = "flex";
 
 function loadPage(){
     document.getElementById("continue").innerHTML = "Go to Page";
-    if(!TEASE.hasOwnProperty("page " + PAGE.value)){
+    let pagename = "page " + PAGE.value;
+    if(!TEASE.hasOwnProperty(pagename)){
         alert("Page number too big");
         PAGE.value = old_Page;
         return;
     }
-    IMG.src = "https://media.milovana.com/timg/tb_l/" + TEASE["page " + old_Page = PAGE.value;]['img']
-    TEXT.innerHTML = TEASE["page " + PAGE.value]['text'];
+    IMG.src = "https://media.milovana.com/timg/tb_l/" + TEASE[pagename]['img']
+    TEXT.innerHTML = TEASE[pagename]['text'];
     if(!TEASE.hasOwnProperty("page " + (PAGE.value*1 + 1))){
         document.getElementById("continue").innerHTML = "END<br>Go to Page";
         PAGE.value = 1;
