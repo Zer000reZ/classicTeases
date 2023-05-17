@@ -1,8 +1,9 @@
 const FILE = document.getElementById("input-file");
 const TEXT = document.getElementById("text-content");
 const IMG = document.getElementById("img-content");
-var TEASE
-var Page = 1;
+const PAGE = document.getElementById('page-num');
+var TEASE;
+var old_page = 1;
 
 FILE.onchange = async ()=>{
     try{
@@ -24,21 +25,19 @@ FILE.onchange = async ()=>{
 document.getElementById("overlay").style.display = "flex";
 
 function loadPage(){
-    document.getElementById("continue").innerHTML = "Go to Page"
-    old_Page = Page
-    Page = document.getElementById('page-num').value * 1;//str to int
-    if(!TEASE.hasOwnProperty("page " + Page)){
+    document.getElementById("continue").innerHTML = "Go to Page";
+    if(!TEASE.hasOwnProperty("page " + PAGE.value)){
         alert("Page number too big");
-        document.getElementById('page-num').value = old_Page;
+        PAGE.value = old_Page;
         return;
     }
-    IMG.src = "https://media.milovana.com/timg/tb_l/" + TEASE["page " + Page]['img']
-    TEXT.innerHTML = TEASE["page " + Page]['text'];
-    
-    if(!TEASE.hasOwnProperty("page " + (Page+1))){
-        document.getElementById("continue").innerHTML = "END<br>Go to Page"
-        document.getElementById("page-num").value = 1;
+    IMG.src = "https://media.milovana.com/timg/tb_l/" + TEASE["page " + old_Page = PAGE.value;]['img']
+    TEXT.innerHTML = TEASE["page " + PAGE.value]['text'];
+    if(!TEASE.hasOwnProperty("page " + (PAGE.value*1 + 1))){
+        document.getElementById("continue").innerHTML = "END<br>Go to Page";
+        PAGE.value = 1;
     }else{
-        document.getElementById("page-num").value = Page + 1;
+       PAGE.value = PAGE.value*1 + 1;
     }
+    old_Page = PAGE.value;
 }
