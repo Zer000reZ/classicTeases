@@ -25,9 +25,11 @@ document.getElementById("overlay").style.display = "flex";
 
 function loadPage(){
     document.getElementById("continue").innerHTML = "Go to Page"
+    old_Page = Page
     Page = document.getElementById('page-num').value * 1;//str to int
     if(!TEASE.hasOwnProperty("page " + Page)){
         alert("Page number too big");
+        document.getElementById('page-num').value = old_Page;
         return;
     }
     IMG.src = "https://media.milovana.com/timg/tb_l/" + TEASE["page " + Page]['img']
