@@ -15,20 +15,35 @@ FILE.onchange = async ()=>{
 async function loadFile(filetext){
     try{
         TEASE = JSON.parse(filetext);
-        let title = document.createElement("a");
-        title.href = "https://milovana.com/webteases/showtease.php?id=" + TEASE['oeosmeta']['teaseId'];
-        title.innerText = TEASE['oeosmeta']['title'];
-        let tt = document.getElementById("tease_title");
-        tt.insertBefore(title, tt.firstChild);
-        if(TEASE["oeosmeta"].hasOwnProperty("author")){
-            let author = document.getElementById("author");
-            author.innerText = TEASE['oeosmeta']['author'];
-            author.href = "https://milovana.com/webteases/?author=" + TEASE['oeosmeta']['authorId'];
-        }
+        
     }catch{
         alert("Invalid File. Try again");
         return;
     }
+    if(!TEASE.hasOwnProperty("oeosmeta")){
+        let title = document.createElement("a");
+        title.innerText = "unknown"
+        if(TEASE["oeosmeta"].hasOwnProperty("title")){
+            title.innerText = TEASE['oeosmeta']['title'];
+        }
+        title.href = "javascript:void(0)";
+        if(TEASE["oeosmeta"].hasOwnProperty("teaseId")){
+            title.href = "https://milovana.com/webteases/showtease.php?id=" + TEASE['oeosmeta']['teaseId'];
+        }
+        let tt = document.getElementById("tease_title");
+        tt.insertBefore(title, tt.firstChild);
+
+        let author = document.getElementById("author");
+        author.innerText = "unknown"
+        if(TEASE["oeosmeta"].hasOwnProperty("author")){
+            author.innerText = TEASE['oeosmeta']['author'];
+        }
+        author.href = "javascript:void(0)";
+        if(TEASE["oeosmeta"].hasOwnProperty("authorId")){
+            author.href = "https://milovana.com/webteases/?author=" + TEASE['oeosmeta']['authorId'];
+        }
+    }
+    
     document.getElementById("overlay").style.display = "none";    
     loadPage();
 }
