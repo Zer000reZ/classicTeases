@@ -16,14 +16,14 @@ async function loadFile(filetext){
     try{
         TEASE = JSON.parse(filetext);
         let title = document.createElement("a");
-        title.href = "https://milovana.com/webteases/showtease.php?id=" + TEASE['meta']['id'];
-        title.innerText = TEASE['meta']['title'];
+        title.href = "https://milovana.com/webteases/showtease.php?id=" + TEASE['oeosmeta']['teaseId'];
+        title.innerText = TEASE['oeosmeta']['title'];
         let tt = document.getElementById("tease_title");
         tt.insertBefore(title, tt.firstChild);
-        if(TEASE["meta"].hasOwnProperty("author")){
+        if(TEASE["oeosmeta"].hasOwnProperty("author")){
             let author = document.getElementById("author");
-            author.innerText = TEASE['meta']['author']['name'];
-            author.href = "https://milovana.com/webteases/?author=" + TEASE['meta']['author']['user-id'];
+            author.innerText = TEASE['oeosmeta']['author'];
+            author.href = "https://milovana.com/webteases/?author=" + TEASE['oeosmeta']['authorId'];
         }
     }catch{
         alert("Invalid File. Try again");
