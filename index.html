@@ -43,7 +43,7 @@
                 </a>
                 <img src="web/imgs/s.gif?32" width="130" height="1" alt=""/>
                 <!--Title-->
-                <h1 id="tease_title"><span class="tease_author">by <a id="author" href="javascript:void(0)" style="color: #933737;">unknown</a></span></h1>
+                <h1 id="tease_title"><span class="tease_author"> by <a id="author" href="javascript:void(0)" style="color: #933737;">unknown</a></span></h1>
                 <div id="tease_content">
                   <p class="breaker"></p>
                   <!--Text Container-->
@@ -77,11 +77,11 @@
       </div>
     </div>
     <!--File Input-->
-    <div id="overlay">
+    <div id="overlay" ondragover="event.preventDefault()" ondrop="acceptFile(event)">
       <div>
-        Please choose the 'json' of a classic Tease
+        Please choose the .json-file of a classic or audio Tease
         <br><br>
-        <input id="input-file" type="file">
+        <input id="input-file" type="file" accept=".json">
       </div>
     </div>
     <script type="text/javascript" src="web/script.js"></script>

@@ -6,11 +6,20 @@ const CONTINUE = document.getElementById("continue");
 var TEASE;
 var old_page = 1;
 
+document.getElementById("overlay").style.display = "flex";
+
 FILE.onchange = async ()=>{
+    loadFile(await FILE.files[0].text());
+}
+
+async function loadFile(filetext){
     try{
-        TEASE = JSON.parse(await FILE.files[0].text());
-        let tt = document.getElementById("tease_title")
-        tt.innerHTML = TEASE['meta']['title'] + tt.innerHTML;
+        TEASE = JSON.parse(filetext);
+        let title = document.createElement("a");
+        title.href = "https://milovana.com/webteases/showtease.php?id=" + TEASE['meta']['id'];
+        title.innerText = TEASE['meta']['title'];
+        let tt = document.getElementById("tease_title");
+        tt.insertBefore(title, tt.firstChild);
         if(TEASE["meta"].hasOwnProperty("author")){
             let author = document.getElementById("author");
             author.innerText = TEASE['meta']['author']['name'];
@@ -21,9 +30,8 @@ FILE.onchange = async ()=>{
         return;
     }
     document.getElementById("overlay").style.display = "none";    
-    loadPage()
+    loadPage();
 }
-document.getElementById("overlay").style.display = "flex";
 
 function loadPage(){
     CONTINUE.innerHTML = "Go to Page";
@@ -54,4 +62,18 @@ function loadPage(){
        PAGE.value = PAGE.value*1 + 1;
     }
     old_Page = PAGE.value;
+}
+
+async function acceptFile(e){
+    e.preventDefault();
+    if (e.dataTransfer.items) {
+        for(let item of e.dataTransfer.items){
+            if (item.kind === "file") {
+                loadFile(await item.getAsFile().text());
+                return;
+            }
+        }
+    } else {
+        loadFile(await e.dataTransfer.files[0].text());
+    }
 }
