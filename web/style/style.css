@@ -23,3 +23,8 @@
     width: 50px;
     margin-left: 5px;
 }
+
+audio {
+    border: 1px solid darkgray;
+    border-radius: 30px;
+}
