@@ -20,7 +20,7 @@ async function loadFile(filetext){
         alert("Invalid File. Try again");
         return;
     }
-    if(!TEASE.hasOwnProperty("oeosmeta")){
+    if(TEASE.hasOwnProperty("oeosmeta")){
         let title = document.createElement("a");
         title.innerText = "unknown"
         if(TEASE["oeosmeta"].hasOwnProperty("title")){
