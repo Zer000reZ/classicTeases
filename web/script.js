@@ -68,7 +68,7 @@ function loadPage(){
         audio.setAttribute('controls', '');
         TEXT.parentElement.insertBefore(audio, TEXT);
     }
-    if((PAGE.value*1 + 1) == last_page){
+    if(PAGE.value*1 == last_page){
         if(PAGE.value=="1"){
             CONTINUE.innerHTML = "END";
             CONTINUE.onclick = "";
