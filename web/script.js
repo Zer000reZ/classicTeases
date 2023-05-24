@@ -3,7 +3,7 @@ const TEXT = document.getElementById("text-content");
 const IMG = document.getElementById("img-content");
 const PAGE = document.getElementById('page-num');
 const CONTINUE = document.getElementById("continue");
-var TEASE;
+var PAGES;
 var old_page = 1;
 var last_page = 1;
 
@@ -15,37 +15,37 @@ FILE.onchange = async ()=>{
 
 async function loadFile(filetext){
     try{
-        TEASE = JSON.parse(filetext);
-        
+        var tease = JSON.parse(filetext);
+        PAGES = tease['pages']
     }catch{
         alert("Invalid File. Try again");
         return;
     }
-    if(TEASE.hasOwnProperty("oeosmeta")){
+    if(tease.hasOwnProperty("oeosmeta")){
         let title = document.createElement("a");
         title.innerText = "unknown"
-        if(TEASE["oeosmeta"].hasOwnProperty("title")){
-            title.innerText = TEASE['oeosmeta']['title'];
+        if(tease["oeosmeta"].hasOwnProperty("title")){
+            title.innerText = tease['oeosmeta']['title'];
         }
         title.href = "javascript:void(0)";
-        if(TEASE["oeosmeta"].hasOwnProperty("teaseId")){
-            title.href = "https://milovana.com/webteases/showtease.php?id=" + TEASE['oeosmeta']['teaseId'];
+        if(tease["oeosmeta"].hasOwnProperty("teaseId")){
+            title.href = "https://milovana.com/webteases/showtease.php?id=" + tease['oeosmeta']['teaseId'];
         }
         let tt = document.getElementById("tease_title");
         tt.insertBefore(title, tt.firstChild);
 
         let author = document.getElementById("author");
         author.innerText = "unknown"
-        if(TEASE["oeosmeta"].hasOwnProperty("author")){
-            author.innerText = TEASE['oeosmeta']['author'];
+        if(tease["oeosmeta"].hasOwnProperty("author")){
+            author.innerText = tease['oeosmeta']['author'];
         }
         author.href = "javascript:void(0)";
-        if(TEASE["oeosmeta"].hasOwnProperty("authorId")){
-            author.href = "https://milovana.com/webteases/?author=" + TEASE['oeosmeta']['authorId'];
+        if(tease["oeosmeta"].hasOwnProperty("authorId")){
+            author.href = "https://milovana.com/webteases/?author=" + tease['oeosmeta']['authorId'];
         }
     }
 
-    while(TEASE.hasOwnProperty("page " + last_page)){last_page++}
+    while(PAGES.hasOwnProperty("page " + last_page)){last_page++}
     last_page--;//get last existing page not first non-existent page
     
     document.getElementById("overlay").style.display = "none";    
@@ -55,16 +55,16 @@ async function loadFile(filetext){
 function loadPage(){
     CONTINUE.innerHTML = "Go to Page";
     let pagename = "page " + PAGE.value;
-    if(!TEASE.hasOwnProperty(pagename)){
+    if(!PAGES.hasOwnProperty(pagename)){
         alert("Last Page is Page "+last_page);
         PAGE.value = old_page;
         return;
     }
-    IMG.src = "https://media.milovana.com/timg/tb_l/" + TEASE[pagename]['img'];
-    TEXT.innerHTML = TEASE[pagename]['text'];
-    if(TEASE[pagename].hasOwnProperty('audio')){
+    IMG.src = "https://media.milovana.com/timg/tb_l/" + PAGES[pagename]['img'];
+    TEXT.innerHTML = PAGES[pagename]['text'];
+    if(PAGES[pagename].hasOwnProperty('audio')){
         let audio = document.createElement('audio');
-        audio.src = "https://media.milovana.com/timg/" + TEASE[pagename]['audio'];
+        audio.src = "https://media.milovana.com/timg/" + PAGES[pagename]['audio'];
         audio.setAttribute('controls', '');
         TEXT.parentElement.insertBefore(audio, TEXT);
     }
