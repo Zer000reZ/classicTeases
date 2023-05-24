@@ -5,6 +5,7 @@ const PAGE = document.getElementById('page-num');
 const CONTINUE = document.getElementById("continue");
 var TEASE;
 var old_page = 1;
+var last_page = 1;
 
 document.getElementById("overlay").style.display = "flex";
 
@@ -43,6 +44,9 @@ async function loadFile(filetext){
             author.href = "https://milovana.com/webteases/?author=" + TEASE['oeosmeta']['authorId'];
         }
     }
+
+    while(TEASE.hasOwnProperty("page " + last_page)){last_page++}
+    last_page--;//get last existing page not first non-existent page
     
     document.getElementById("overlay").style.display = "none";    
     loadPage();
@@ -52,8 +56,8 @@ function loadPage(){
     CONTINUE.innerHTML = "Go to Page";
     let pagename = "page " + PAGE.value;
     if(!TEASE.hasOwnProperty(pagename)){
-        alert("Page number too big");
-        PAGE.value = old_Page;
+        alert("Last Page is Page "+last_page);
+        PAGE.value = old_page;
         return;
     }
     IMG.src = "https://media.milovana.com/timg/tb_l/" + TEASE[pagename]['img'];
@@ -64,7 +68,7 @@ function loadPage(){
         audio.setAttribute('controls', '');
         TEXT.parentElement.insertBefore(audio, TEXT);
     }
-    if(!TEASE.hasOwnProperty("page " + (PAGE.value*1 + 1))){
+    if((PAGE.value*1 + 1) == last_page){
         if(PAGE.value=="1"){
             CONTINUE.innerHTML = "END";
             CONTINUE.onclick = "";
@@ -76,7 +80,7 @@ function loadPage(){
     }else{
        PAGE.value = PAGE.value*1 + 1;
     }
-    old_Page = PAGE.value;
+    old_page = PAGE.value;
 }
 
 async function acceptFile(e){
