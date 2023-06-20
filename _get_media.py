@@ -9,17 +9,21 @@ from tkinter import filedialog as fd
 
 
 def main(path):
-    with open(path, 'r', encoding='ansi') as file:
-        data = json.load(file)
-
-    dir_name = path.replace('/', '\\').split('\\')[-1][:-5]
+    if isinstance(path, int):
+        data = json.loads(requests.get('https://milovana.com/webteases/geteosscript.php?id='+str(path)).text)
+        data['oeosmeta'] = {'typ': 'eos|flash'}
+        dir_name = str(path)
+    else:
+        with open(path, 'r', encoding='ansi') as file:
+            data = json.load(file)
+        dir_name = path.replace('/', '\\').split('\\')[-1][:-5].strip(' .')
     
     if not os.path.isdir('_pics'):
         os.mkdir('_pics')
     if not os.path.isdir('_pics\\'+dir_name):
         os.mkdir('_pics\\'+dir_name)
 
-    if data['oeosmeta']['typ'] in ('eos', 'flash'):
+    if data['oeosmeta']['typ'] in 'eos|flash':
         if 'galleries' in data:
             for k,v in data['galleries'].items():
                 gal_name = v["name"]
@@ -62,7 +66,11 @@ if __name__ == '__main__':
         if len(sys.argv) > 1:
             files = sys.argv[1:]
         else:
-            files = fd.askopenfilenames(filetypes=[('JSON', '.json')])
+            files = input('tease-ids (f/files for file-dialog): ')
+            if files in 'files':
+                files = fd.askopenfilenames(filetypes=[('JSON', '.json')])
+            else:
+                files = [int(i) for i in files.replace(' ', ',').split(',') if i.isnumeric()]
         for i in files:
             main(i)
     except Exception as e:
