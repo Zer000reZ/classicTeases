@@ -60,11 +60,11 @@ function loadPage(){
         PAGE.value = old_page;
         return;
     }
-    IMG.src = "https://media.milovana.com/timg/tb_l/" + PAGES[pagename]['img'];
+    IMG.src = "https://media.milovana.com/timg/tb_l/" + PAGES[pagename]['img'] + '.jpg';
     TEXT.innerHTML = PAGES[pagename]['text'];
     if(PAGES[pagename].hasOwnProperty('audio')){
         let audio = document.createElement('audio');
-        audio.src = "https://media.milovana.com/timg/" + PAGES[pagename]['audio'];
+        audio.src = "https://media.milovana.com/timg/" + PAGES[pagename]['audio'] +'.mp3';
         audio.setAttribute('controls', '');
         TEXT.parentElement.insertBefore(audio, TEXT);
     }
